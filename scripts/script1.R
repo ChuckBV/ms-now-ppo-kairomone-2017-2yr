@@ -27,93 +27,127 @@ lttrextract <-function(string){
 
 #== 1. Count data, 2017 lures test ==========================================
 
-lures17 <- read_csv("./data/Y17a_counts.csv")
-trts <- unique(lures17$Treatment)
+y17_lures <- read_csv("./data/Y17a_counts.csv")
+
+### Pull out treatments for next data set, put in df
+trts <- unique(y17_lures$Treatment)
 trts # [1] "NowBiolure" "Ppo"   "PpoCombo"    "StopNow"   "StopNowCombo"
-lures17 <- mutate(lures17, Treatment = factor(Treatment, levels = trts))
-lures17$Site <- as.factor(lures17$Site)
-lures17$Crop <- as.factor(lures17$Crop)
-lures17$MD <- as.factor(lures17$MD)
-lures17$Rep <- as.factor(lures17$Rep)
-lures17$Date <- as.Date(mdy(lures17$Date))
+TrtCode <- LETTERS[1:5]
+trt_df <- data.frame(TrtCode,trts, stringsAsFactors = TRUE)
+trt_df <- as_tibble(trt_df)
+
+### Treatments as ordered factors
+y17_lures <- mutate(y17_lures, Treatment = factor(Treatment, levels = trts))
+y17_lures$Site <- as.factor(y17_lures$Site)
+y17_lures$Crop <- as.factor(y17_lures$Crop)
+y17_lures$MD <- as.factor(y17_lures$MD)
+y17_lures$Rep <- as.factor(y17_lures$Rep)
+y17_lures$Date <- as.Date(mdy(y17_lures$Date))
 
 
 #== 2. Sex data for 2017 lures test =========================================
 
-sexes17 <- read_csv("./data/Y17a_sex_ratio.csv")
+y17_sexes <- read_csv("./data/Y17a_sex_ratio.csv")
 
-unique(sexes17$Treatment) # Same as trts, different order
-sexes17 <- mutate(sexes17, Treatment = factor(Treatment, levels = trts))
-levels(sexes17$Treatment)
-sexes17$Site <- NULL
-sexes17$Crop <- as.factor(sexes17$Crop)
-sexes17$MD <- as.factor(sexes17$MD)
-sexes17$Rep <- as.factor(sexes17$Rep)
-sexes17$Date <- as.Date(mdy(sexes17$Date))
-sexes17$Sex <- as.factor(sexes17$Sex)
+unique(y17_sexes$Treatment) # Same as trts, different order
+y17_sexes <- mutate(y17_sexes, Treatment = factor(Treatment, levels = trts))
+levels(y17_sexes$Treatment)
+y17_sexes$Site <- NULL
+y17_sexes$Crop <- as.factor(y17_sexes$Crop)
+y17_sexes$MD <- as.factor(y17_sexes$MD)
+y17_sexes$Rep <- as.factor(y17_sexes$Rep)
+y17_sexes$Date <- as.Date(mdy(y17_sexes$Date))
+y17_sexes$Sex <- as.factor(y17_sexes$Sex)
 
 #== 3. Spring 2018 lures test =========================================
 
-lures18a <- read_csv("./data/Y18a_KettlemanAlmData.csv")
-## Create "decoder" to translate TrtCode to Treatment
-TrtCode <- LETTERS[1:5]
-Treatment <- trts
-trts_df <- as_tibble(data.frame(TrtCode,Treatment))
-trts_df <- mutate(trts_df, Treatment = factor(Treatment, levels = trts))
+y18_lures <- read_csv("./data/Y18_lures.csv")
+
 ## Get correct data type for other variables
-lures18a$Rep <- as.factor(lures18a$Rep)
-lures18a$Treatment <- NULL
-lures18a$Crop <- as.factor(lures18a$Crop)
-lures18a$MD <- as.factor(lures18a$MD)
-lures18a$Female <- NULL
-lures18a$EndDate <- as.Date(mdy(lures18a$EndDate))
-lures18a$StartDate <- as.Date(mdy(lures18a$StartDate))
+y18_lures$Rep <- as.factor(y18_lures$Rep)
+y18_lures$Treatment <- NULL
+y18_lures$Crop <- as.factor(y18_lures$Crop)
+y18_lures$MD <- as.factor(y18_lures$MD)
+y18_lures$Female <- NULL
+y18_lures$EndDate <- as.Date(y18_lures$EndDate)
+y18_lures$StartDate <- as.Date(y18_lures$StartDate)
 
-lures18a %>% 
-  filter(!is.na(Comment)) %>%
-  group_by(Comment) %>%
-  select(TrapID,EndDate,Comment) %>%
-  summarise(nObs = n())
+y18_lures$TrtCode <- as.factor(y18_lures$TrtCode)
+y18_lures$Site <- as.factor(y18_lures$Site)
+y18_lures$Crop <- as.factor(y18_lures$Crop)
+y18_lures$MD <- as.factor(y18_lures$MD)
 
-lures18a$Comment <- NULL
+y18_lures <- left_join(trt_df,y18_lures)
 
-lures18b <- read_csv("./data/Y18a_KettlemanPistData.csv")
-lures18b$Rep <- as.factor(lures18b$Rep)
-lures18b$Treatment <- NULL
-lures18b$Crop <- as.factor(lures18b$Crop)
-lures18b$MD <- as.factor(lures18b$MD)
-lures18b$Female <- NULL
-lures18b$EndDate <- as.Date(mdy(lures18b$EndDate))
-lures18b$StartDate <- as.Date(mdy(lures18b$StartDate))
+y18_lures <- rename(y18_lures, Treatment = trts)
 
-lures18b %>% 
-  filter(!is.na(Comment)) %>%
-  group_by(Comment) %>%
-  select(TrapID,EndDate,Comment) %>%
-  summarise(nObs = n())
+rm(trt_df)
 
-lures18b$Comment <- NULL
-lures18b <- lures18b[ ,1:10]
-
-lures18c <- read_csv("./data/Y18a_VistaPistData.csv")
-lures18c$Rep <- as.factor(lures18c$Rep)
-lures18c$Treatment <- NULL
-lures18c$Crop <- as.factor(lures18c$Crop)
-lures18c$MD <- as.factor(lures18c$MD)
-lures18c$Female <- NULL
-lures18c$EndDate <- as.Date(mdy(lures18c$EndDate))
-lures18c$StartDate <- as.Date(mdy(lures18c$StartDate))
-
-lures18c %>% 
-  filter(!is.na(Comment)) %>%
-  group_by(Comment) %>%
-  select(TrapID,EndDate,Comment) %>%
-  summarise(nObs = n())
-
-lures18c <- lures18c[ ,1:10]
-
-lures18 <- rbind(lures18a,lures18b,lures18c)
-lures18 <- left_join(trts_df,lures18)
 
 #== 4. Summer/fall 2018 attractant and trap =================================
 
+y18_june <- as_tibble(read.csv("./data/Y18b_ppo_buckets_july.csv"))
+
+y18_june$EndDate <- as.Date(mdy(y18_june$EndDate))
+y18_june$StartDate <- as.Date(mdy(y18_june$StartDate))
+y18_june$IntDays <- as.integer(y18_june$EndDate - y18_june$StartDate)
+y18_june$NowPrWk <- y18_june$Count/y18_june$IntDays*7
+## Derive proportion of males captured in traps
+y18_june$pMale <- y18_june$Male/(y18_june$Count - y18_june$CantDist)
+
+## 
+y18_june_trts <- c("WingPhero","WingPheroPpo","DeltPheroPpo","BuckPpo","BuckPheroPpo")  
+y18_june <- mutate(y18_june, Treatment = factor(Treatment, levels = y18_june_trts))
+
+unique(y18_june$StartDate)
+# [1] "2018-06-21" "2018-06-29"
+unique(y18_june$EndDate)
+# [1] "2018-06-29" "2018-07-12"
+
+y18_july <- as_tibble(read.csv("./data/Y18b_ppo_buckets_july.csv"))
+
+y18_july %>%
+  group_by(EndDate,Comment) %>%
+  summarise(nObs = n())
+# A tibble: 6 x 3
+# Groups:   EndDate [6]
+#   EndDate   Comment                                                           nObs
+#   <fct>     <fct>                                                            <int>
+# 1 7/25/2018 "Unable to find infromation about the evaluation for this date "    40
+# 2 7/31/2018 ""                                                                  40
+# 3 8/8/2018  ""                                                                  40
+# 4 9/12/2018 ""                                                                  40
+# 5 9/18/2018 ""                                                                  40
+# 6 9/28/2018 ""                                                                  40
+
+y18_july$Comment <- NULL
+
+y18_july$EndDate <- as.Date(mdy(y18_july$EndDate))
+y18_july$StartDate <- as.Date(mdy(y18_july$StartDate))
+y18_july$IntDays <- as.integer(y18_july$EndDate - y18_july$StartDate)
+y18_july$NowPrWk <- y18_july$Count/y18_july$IntDays*7
+## Derive proportion of males captured in traps
+y18_july$pMale <- y18_july$Male/(y18_july$Count - y18_july$CantDist)
+
+unique(y18_july$StartDate)
+#[1] "2018-07-12" "2018-07-25" "2018-07-31" "2018-08-08" "2018-09-12" "2018-09-18"
+unique(y18_july$EndDate)
+#[1] "2018-07-25" "2018-07-31" "2018-08-08" "2018-09-12" "2018-09-18" "2018-09-28"
+
+#== 5. 2019 Delta Trap Experiment ===========================================
+
+y19_delta <- read_csv("./data/Y19_delta.csv")
+y19_delta <- y19_delta[ ,3:8] 
+
+# Make Treatment an ordered factor with the desired order
+y19_delta <- y19_delta %>% 
+  mutate(Treatment = factor(Treatment, 
+                            levels = c("WingPhero","WingPpo","WingCombo","DeltaPpo","DeltaCombo","ModPpo","ModCombo")))
+levels(y19_delta$Treatment)
+
+y19_delta$StartDate <- as.Date(y19_delta$StartDate)
+y19_delta$EndDate <- as.Date(y19_delta$EndDate)
+strt_dats <- unique(y19_delta$StartDate)
+end_dats <- unique(y19_delta$EndDate)
+
+nmbr_wks <- as.numeric(sum(end_dats - strt_dats)/7)

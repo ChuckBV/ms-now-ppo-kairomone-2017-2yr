@@ -1,0 +1,11 @@
+﻿Experiment,Crop,MD,Description,Number of treatments,Number of replicates,When and how long tested
+1,Almond,No,Comparison of PPO and Kairomone blend,5,8,"June 7 to September 12, 2017"
+,Almond,Yes,,5,8,
+,Pistachio,No,,5,8,
+,Pistachio,Yes,,5,8,
+2,Almond,No,Comparison of PPO and Kairomone blend,5,8,"April 6 to June 12, 2018"
+,Pistachio,No,,5,8,
+,Pistachio,Meh,,5,8,
+3,Pistachio,Yes,Impact of trap design,5,8,"June 21 to July 12, 2018"
+4,Pistachio,Yes,,,,
+5,Almond,Yes,Impact of trap design,,,
