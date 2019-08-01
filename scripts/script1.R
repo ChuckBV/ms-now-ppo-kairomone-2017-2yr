@@ -114,3 +114,6 @@ lures18c <- lures18c[ ,1:10]
 
 lures18 <- rbind(lures18a,lures18b,lures18c)
 lures18 <- left_join(trts_df,lures18)
+
+#== 4. Summer/fall 2018 attractant and trap =================================
+
