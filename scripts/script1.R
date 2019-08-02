@@ -4,8 +4,11 @@
 # Read in PPO study data sets from 2017 to 2019
 #
 # Parts
-# 1. 
-# 2. 
+# 1. Load 2017 lures test (line 31)
+# 2. Load sex ratio data for the 2017 lures test (line 51)
+# 3, Load the 2018 follow-up lures test (line 65)
+# 4. Load the June and July trap design test (line 90)
+# 5. Load the 2019 delta trap test (line 146)
 #
 #============================================================================
 
@@ -86,7 +89,7 @@ rm(trt_df)
 
 #== 4. Summer/fall 2018 attractant and trap =================================
 
-y18_june <- as_tibble(read.csv("./data/Y18b_ppo_buckets_july.csv"))
+y18_june <- as_tibble(read.csv("./data/Y18b_ppo_buckets_june.csv"))
 
 y18_june$EndDate <- as.Date(mdy(y18_june$EndDate))
 y18_june$StartDate <- as.Date(mdy(y18_june$StartDate))
@@ -128,6 +131,11 @@ y18_july$IntDays <- as.integer(y18_july$EndDate - y18_july$StartDate)
 y18_july$NowPrWk <- y18_july$Count/y18_july$IntDays*7
 ## Derive proportion of males captured in traps
 y18_july$pMale <- y18_july$Male/(y18_july$Count - y18_july$CantDist)
+
+### NB Although the treatment names of the June and July experiments are the 
+### same, the form of the Delta Trap used was different
+y18_july <- mutate(y18_july, Treatment = factor(Treatment, levels = y18_june_trts))
+
 
 unique(y18_july$StartDate)
 #[1] "2018-07-12" "2018-07-25" "2018-07-31" "2018-08-08" "2018-09-12" "2018-09-18"
