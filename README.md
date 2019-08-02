@@ -7,7 +7,7 @@ Experiments between 2017 and 2019 compared PPO and kairomone blend, examined
 effect of trap type on PPO effectiveness, and examined sex ratio. Experiments
 included:
 
-![Experiments table in ./doc/Experiments.csv](/doc/Experiments.csv)
+![Experiments table in ./doc/Experiments.csv](/doc/Experiments.JPG)
 
 
 ## Scripts
