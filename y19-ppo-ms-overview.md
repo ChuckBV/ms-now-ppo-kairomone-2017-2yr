@@ -40,16 +40,28 @@ Effect of trap characteristics on trap effectiveness
  
 ## Elements (Tables and Figures)
 
+### Table 1. Experiments
+
+![Experiments table in ./doc/Experiments.csv](/doc/Experiments.JPG)
+
 ### Figure 1. Trap types including modified delta trap
+
+![Illustration of trap types](/doc/Experiments.JPG)
 
 ### Figure 2. Adults per week in disrupted and non-disrupted almonds and pistachios in 2017
 
-### Figure 2. Adults per week in disrupted and non-disrupted almonds spring 2018 
+![Box plot cumulative as wkly mean](/doc/fig2.JPG)
 
-### Table 2. Comparison of PPO in bucket and sticky traps
+### Table 2. Adults per week three sites in spring spring 2018 
 
-### Table 3. Comparions of PPO including modified sticky trap
+![Cumaltive trap count weekly average spring 2018](doc/table2-lures-spring2018.JPG)
+
+### Table 3. Comparison of PPO in bucket and sticky traps
+
+
 
 ### Figure 3. Comparison of modified and unmodified sticky traps
+
+
 
 ### Table 4. Sex ratio in PPO and kairomone traps

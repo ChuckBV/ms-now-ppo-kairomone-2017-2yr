@@ -4,8 +4,11 @@
 # Explore results and generate table for spring 2018 experiment
 #
 # Parts
-# 1. 
-# 2. 
+# 1. Import data set to data frame (line 32)
+# 2. Characterize number of NAs, sampling dates, and weekly phenology 
+#    (line 65)
+# 3. Pool data across dates, output for SAS, and obtain a table of 
+#    mean and SE
 #
 #============================================================================
 
@@ -13,7 +16,7 @@
 library(tidyverse)
 library(lubridate)
 library(DescTools)
-library(userfriendlyscience)
+library(viridis)
 
 # load functions
 se <- function(number){ 
@@ -29,133 +32,205 @@ lttrextract <-function(string){
 
 #== 1. Count data, 2017 lures test ==========================================
 
-### In script 1 this is "y17_lures" Here Counts because it is easier
+counts <- read_csv("./data/Y18_lures.csv")
+### in script1 this data set is assigned to y18_lures. Here generic "counts" 
+### is used
 
-counts <- read_csv("./data/Y17a_counts.csv")
+## Get correct data type for other variables
+counts$Rep <- as.factor(counts$Rep)
+counts$Treatment <- NULL
+counts$Crop <- as.factor(counts$Crop)
+counts$MD <- as.factor(counts$MD)
+counts$Female <- NULL
+counts$EndDate <- as.Date(mdy(counts$EndDate))
+counts$StartDate <- as.Date(mdy(counts$StartDate))
 
-### Pull out treatments for next data set, put in df
-trts <- unique(counts$Treatment)
-trts # [1] "NowBiolure" "Ppo"   "PpoCombo"    "StopNow"   "StopNowCombo"
+counts$TrtCode <- as.factor(counts$TrtCode)
+counts$Site <- as.factor(counts$Site)
+counts$Crop <- as.factor(counts$Crop)
+counts$MD <- as.factor(counts$MD)
+
+### Pull in treatment names
+trts <- c("NowBiolure","Ppo","PpoCombo","StopNow","StopNowCombo")
 TrtCode <- LETTERS[1:5]
 trt_df <- data.frame(TrtCode,trts, stringsAsFactors = TRUE)
 trt_df <- as_tibble(trt_df)
 
-### Treatments as ordered factors
-counts <- mutate(counts, Treatment = factor(Treatment, levels = trts))
-counts$Site <- as.factor(counts$Site)
-counts$Crop <- as.factor(counts$Crop)
-counts$MD <- as.factor(counts$MD)
-counts$Rep <- as.factor(counts$Rep)
-counts$Date <- as.Date(mdy(counts$Date))
+counts <- left_join(trt_df,counts)
 
-#== 2. Examination with DescTools, output for SAS, perform nonparametric ====
+counts <- rename(counts, Treatment = trts)
 
-### Examine distribution of counts by date and treatment
+### Clean up 
+rm(trt_df,trts,TrtCode)
 
-Desc(Count ~ Date, data = counts) # minimual NAs, no unbelievable values
-Desc(Count ~ Treatment, data = counts) # consistent with data notebooks
-
-counts %>% 
-  filter(is.na(Count)) %>%
-  group_by(Week,MD,Crop) %>%
+#== 2. Characterize number of NAs, sampling dates, and weekly phenology =====
+counts %>%
+  group_by(Site,Crop,MD) %>%
   summarise(nObs = n())
-# A tibble: 15 x 4
-# Groups:   Week, MD [11]
-#      Week MD    Crop   nObs
-#    <dbl> <fct> <fct> <int>
-#  1    26 Yes   Alm       1
-#  2    27 No    Pis       1
-#  3    28 Yes   Alm       1
-#  4    33 Yes   Alm       1
-#  5    34 Yes   Alm      40 # Missed a week at Vista Verde
-#  6    34 Yes   Pis      40 # Missed a week at Vista Verde
-#  7    35 No    Alm       2
-#  8    35 Yes   Alm       4
-#  9    36 No    Alm       1
-# 10    36 No    Pis       1
-# 11    36 Yes   Alm       1
-# 12    37 No    Alm       1
-# 13    37 No    Pis       3
-# 14    37 Yes   Alm       1
-# 15    37 Yes   Pis       1
+# A tibble: 3 x 4
+# Groups:   Site, Crop [3]
+#   Site       Crop  MD     nObs
+#   <fct>      <fct> <fct> <int>
+# 1 Kettleman  Alm   No      240
+# 2 Kettleman  Pis   No      280
+# 3 VistaVerde Pis   Yes     240
 
-
-### Pool counts across all weeks to avoid pseudoreplication
-counts <- counts[complete.cases(counts), ] 
-# -- Not using na.rm, so can't forget the step above!
-y17_to_sas <- counts %>% 
-  group_by(Crop, MD, Treatment, Rep, Trap) %>%
-  summarise(nObs = n(),
-            Total = sum(Count))
-
-### Show number of observations (traps) by number of weeks
-y17_to_sas %>%
-  group_by(nObs) %>%
-  summarise(instances = n())
-# A tibble: 4 x 2
-# nObs instances
-#   <int>     <int>
-# 1    11         3
-# 2    12         7
-# 3    13        76
-# 4    14        74
-
-write.csv(y17_to_sas, "./data/intermediate/y17_to_sas.csv", row.names = FALSE)
-
-alm_md <- y17_to_sas %>%
-  filter(Crop == "Alm" & MD == "Yes")
-
-one.way <- oneway(alm_md$Treatment, y = alm_md$Total, posthoc = 'games-howell')
-one.way
+# Number of NAs in the above is respectively 2, 1, and 8
+counts %>%
+  group_by(Site,Crop,MD) %>%
+  summarise(Begin = min(StartDate),
+            End = max(EndDate))
+# A tibble: 3 x 5
+# Groups:   Site, Crop [3]
+#   Site       Crop  MD    Begin      End       
+#   <fct>      <fct> <fct> <date>     <date>    
+# 1 Kettleman  Alm   No    2018-04-10 2018-06-07
+# 2 Kettleman  Pis   No    2018-04-06 2018-06-07
+# 3 VistaVerde Pis   Yes   2018-04-09 2018-06-12
 
 
 
-#== 3. Plot figure ==========================================================
+alm_nomd <- counts %>% filter(Crop == "Alm" & MD == "No")
+pis_nomd <- counts %>% filter(Crop == "Pis" & MD == "No")
+pis_md <- counts %>% filter(Crop == "Pis" & MD == "Yes")
 
-### Get factor names needed for plot labels
-levels(counts$Crop)[levels(counts$Crop) == "Alm"] <- "Almond"
-levels(counts$Crop)[levels(counts$Crop) == "Pis"] <- "Pistachio"
-levels(counts$MD)[levels(counts$MD) == "No"] <- "Non-disrupted"
-levels(counts$MD)[levels(counts$MD) == "Yes"] <- "Mating Disruption"
+### Get means and weekly plot for almonds, no mating disruption
+alm_nomd <- alm_nomd %>%
+  group_by(Treatment,EndDate) %>%
+  summarise(nObs = sum(!is.na(Count)),
+            avg = mean(Count, na.rm = TRUE),
+            sem = se(Count))
 
-levels(counts$Treatment)[levels(counts$Treatment) == "StopNow"] <- "Kairomone"
-levels(counts$Treatment)[levels(counts$Treatment) == "StopNowCombo"] <- "KairomoneCombo"
-unique(counts$Treatment)
-
-FSA::headtail(counts)
-
-### Generate Season-long trap means
-counts <- counts[complete.cases(counts), ] # drops from 2240 records to 2141
-
-trapmeans <- counts %>% 
-  group_by(Crop, MD, Treatment, Trap) %>%
-  summarise(nObs = n(),
-            avg = mean(Count))
-
-p2 <-
-  ggplot(trapmeans, aes(x = Treatment, y = avg)) +
-  geom_boxplot() + 
-  theme_bw() +
-  facet_grid(Crop ~ MD) +
-  
-  #ylim(0,100) +
+p1 <- ggplot(alm_nomd, aes(x = EndDate, y = avg, colour = Treatment)) +
+  geom_point(size = 3, shape = 21, fill = "white") +
+  geom_errorbar(data = alm_nomd, mapping = aes(x = EndDate, 
+                                              ymin = avg - sem, ymax = avg + sem), 
+                size = 1 , width = 0.4) +
+  geom_line() +
+  ggtitle("2018, almond, no mating disruption") +
+  scale_colour_viridis(discrete = TRUE) +
   xlab("") +
-  ylab("NOW per trap per week") +
-  theme(axis.text.x = element_blank(),
-        #axis.text.x = element_text(color = "black", size = 7, angle = 45, hjust = 1),
-        axis.text.y = element_text(color = "black", size = 8),
-        axis.title.x = element_text(color = "black", size = 9),
-        axis.title.y = element_text(color = "black", size = 9),
-        legend.title = element_text(color = "black", size = 14),
-        legend.text = element_text(color = "black", size = 14))
+  ylab("Males per trap") +
+  theme(legend.position = c(0.85, 0.7),
+        # moved legend inside with this, see https://rpubs.com/folias/A-simple-example-on-ggplot2-legend-options     
+        axis.text.x = element_text(color = "black", size = 7), 
+        axis.text.y = element_text(color = "black", size = 7),
+        axis.title.x = element_text(color = "black", size = 7),
+        axis.title.y = element_text(color = "black", size = 7),
+        legend.title = element_text(color = "black", size = 7),
+        legend.text = element_text(color = "black", size = 7))
+
+p1
+
+ggsave(filename = "y18-lures-wkly-alm-nomd.jpg", plot = p1, device = "jpg", path = "./output", 
+   dpi = 300, width = 5.83, height = 3.0, units = "in")
+
+
+
+### Get means and weekly plot for pistachios, no mating disruption
+pis_nomd <- pis_nomd %>%
+  group_by(Treatment,EndDate) %>%
+  summarise(nObs = sum(!is.na(Count)),
+            avg = mean(Count, na.rm = TRUE),
+            sem = se(Count))
+
+p2 <- ggplot(pis_nomd, aes(x = EndDate, y = avg, colour = Treatment)) +
+  geom_point(size = 3, shape = 21, fill = "white") +
+  geom_errorbar(data = pis_nomd, mapping = aes(x = EndDate, 
+                                               ymin = avg - sem, ymax = avg + sem), 
+                size = 1 , width = 0.4) +
+  geom_line() +
+  ggtitle("2018, pistachio, no mating disruption") +
+  scale_colour_viridis(discrete = TRUE) +
+  xlab("") +
+  ylab("Males per trap") +
+  theme(legend.position = c(0.85, 0.7),
+        # moved legend inside with this, see https://rpubs.com/folias/A-simple-example-on-ggplot2-legend-options     
+        axis.text.x = element_text(color = "black", size = 7), 
+        axis.text.y = element_text(color = "black", size = 7),
+        axis.title.x = element_text(color = "black", size = 7),
+        axis.title.y = element_text(color = "black", size = 7),
+        legend.title = element_text(color = "black", size = 7),
+        legend.text = element_text(color = "black", size = 7))
 
 p2
 
+ggsave(filename = "y18-lures-wkly-pis-nomd.jpg", plot = p2, device = "jpg", path = "./output", 
+       dpi = 300, width = 5.83, height = 3.0, units = "in")
 
-ggsave(filename = "Y17a2_season_means.eps", p2, path = "./output",
-       width = 5.83, height = 5.83, dpi = 300, units = "in", device='eps')
+  
 
-### imported into PowerPoint, where treatment titles and multiple
-### range test letter labels are added. Can then be output to postscript
+### Get means and weekly plot for pistachios, with mating disruption
+pis_md <- pis_md %>%
+  group_by(Treatment,EndDate) %>%
+  summarise(nObs = sum(!is.na(Count)),
+            avg = mean(Count, na.rm = TRUE),
+            sem = se(Count))
 
+p3 <- ggplot(pis_md, aes(x = EndDate, y = avg, colour = Treatment)) +
+  geom_point(size = 3, shape = 21, fill = "white") +
+  geom_errorbar(data = pis_md, mapping = aes(x = EndDate, 
+                                               ymin = avg - sem, ymax = avg + sem), 
+                size = 1 , width = 0.4) +
+  geom_line() +
+  ggtitle("2018, pistachio, with mating disruption") +
+  scale_colour_viridis(discrete = TRUE) +
+  xlab("") +
+  ylab("Males per trap") +
+  theme(legend.position = c(0.85, 0.7),
+        # moved legend inside with this, see https://rpubs.com/folias/A-simple-example-on-ggplot2-legend-options     
+        axis.text.x = element_text(color = "black", size = 7), 
+        axis.text.y = element_text(color = "black", size = 7),
+        axis.title.x = element_text(color = "black", size = 7),
+        axis.title.y = element_text(color = "black", size = 7),
+        legend.title = element_text(color = "black", size = 7),
+        legend.text = element_text(color = "black", size = 7))
 
+p3
+
+ggsave(filename = "y18-lures-wkly-pis-md.jpg", plot = p3, device = "jpg", path = "./output", 
+       dpi = 300, width = 5.83, height = 3.0, units = "in")
+
+#== 3. Pool males captured across all dates, output to SAS, make table ======
+
+### Examine extent to which NAs mess up the data
+test <- counts %>% 
+  filter(is.na(Count)) %>%
+  arrange(Crop,MD,Treatment,Rep,EndDate)
+
+rmv_these <- unique(test$TrapID)
+
+### Remove traps from consideration if there were NAs some weeks
+counts2 <- counts %>%
+  filter(!TrapID %in% rmv_these) 
+
+totals <- counts2 %>%
+  group_by(Crop, MD, Treatment,Rep) %>%
+  summarise(nObs = sum(!is.na(Count)),
+            total = sum(Count, na.rm = TRUE))
+
+totals %>%
+  group_by(nObs) %>%
+  summarise(nTimes = n())
+# A tibble: 2 x 2
+#    nObs nTimes
+#   <int>  <int>
+# 1     6     76
+# 2     7     39
+
+write.csv(totals, "./data/intermediate/y18lures_to_sas.csv", row.names = FALSE)
+
+### Get tables of mean and SE
+### Start by expressing as weekly rather than total
+totals <- totals %>%
+  mutate(perwk = total/nObs)
+
+### Get table
+avg_wkly <- totals %>%
+  group_by(Crop,MD,Treatment) %>%
+  summarise(nObs = sum(!is.na(perwk)),
+            avg = mean(perwk, na.rm = TRUE),
+            sem = se(perwk)) 
+avg_wkly
+
+write.csv(avg_wkly,"./output/y18-lures-cumulative.csv", row.names = FALSE)

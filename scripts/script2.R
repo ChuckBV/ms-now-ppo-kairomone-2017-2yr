@@ -17,18 +17,6 @@ library(lubridate)
 library(DescTools)
 library(userfriendlyscience)
 
-# load functions
-se <- function(number){ 
-  sd(number, na.rm = TRUE)/sqrt(sum(!is.na(number), na.rm = TRUE))
-}
-library(stringr)
-numextract <- function(string){ 
-  str_extract(string, "\\-*\\d+\\.*\\d*")
-} 
-lttrextract <-function(string){
-  str_extract(string, "\\-*\\D+\\.*\\D*")
-} 
-
 #== 1. Count data, 2017 lures test ==========================================
 
 ### In script 1 this is "y17_lures" Here Counts because it is easier
