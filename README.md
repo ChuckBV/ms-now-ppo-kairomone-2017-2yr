@@ -12,4 +12,10 @@ included:
 
 ## Scripts
 
+### script1.R
+
+Reads *.csv files for each of the experiments above into data frames
+
+
+
 

@@ -16,18 +16,6 @@
 library(tidyverse)
 library(lubridate)
 
-# load functions
-se <- function(number){ 
-  sd(number, na.rm = TRUE)/sqrt(sum(!is.na(number), na.rm = TRUE))
-}
-library(stringr)
-numextract <- function(string){ 
-  str_extract(string, "\\-*\\d+\\.*\\d*")
-} 
-lttrextract <-function(string){
-  str_extract(string, "\\-*\\D+\\.*\\D*")
-} 
-
 #== 1. Count data, 2017 lures test ==========================================
 
 y17_lures <- read_csv("./data/Y17a_counts.csv")
