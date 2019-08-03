@@ -28,20 +28,32 @@ run;
 
 /*---------------------------   glimmix for each location  ----------------*/
 
-proc glimmix data = alm_md;
+*proc glimmix data = alm_md;
+  *class Treatment Rep;
+  *model Total = Treatment / dist=nb;
+  *random Rep;
+  *lsmeans Treatment / adjust=tukey lines;
+*run; 
+*-- does not converage, use Welch ANOVA and games-howell posthoc via R --;
+
+proc glimmix data = alm_nomd;
   class Treatment Rep;
   model Total = Treatment / dist=nb;
   random Rep;
   lsmeans Treatment / adjust=tukey lines;
 run; 
 
-proc glm data = alm_md;
-  class Treatment;
-  model Total = Treatment;
-  means Treatment / welch;
-run;
-quit;  
+proc glimmix data = pi_md;
+  class Treatment Rep;
+  model Total = Treatment / dist=nb;
+  random Rep;
+  lsmeans Treatment / adjust=tukey lines;
+run; 
 
+proc glimmix data = pi_nomd;
+  class Treatment Rep;
+  model Total = Treatment / dist=nb;
+  random Rep;
+  lsmeans Treatment / adjust=tukey lines;
+run; 
 
-proc print data=alm_md (obs = 6);
-run;

@@ -1,0 +1,5 @@
+﻿Experiment,Part,Script,Procedure,How,Result
+1,alm_md,script2,Welch ANOVA with Games-Howell posthoc comp,"R, userfriendlyscience","F = 59.84, df = 4, 35; P < 0.001"
+,alm_nomd,script2,GLMM with nb dist,"SAS, GLIMMIX","F = 66.3, df = 4, 28; P < 0.001"
+,pi_md,script2,GLMM with nb dist,"SAS, GLIMMIX","F = 109.96, df = 4, 28; P < 0.001"
+,pi_nomd,script2,GLMM with nb dist,"SAS, GLIMMIX","F = 29.95, df = 4, 28; P < 0.001"

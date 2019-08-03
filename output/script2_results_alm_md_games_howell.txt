@@ -1,0 +1,11 @@
+Trt                        diff   ci.lo   ci.hi     t    df     p
+Ppo-NowBiolure            77.50   29.97  125.03  5.74  7.45  .004
+PpoCombo-NowBiolure      165.62  117.99  213.26 12.23  7.44 <.001
+StopNow-NowBiolure        12.62   -3.55   28.80  2.53 10.79  .154
+StopNowCombo-NowBiolure   22.12    9.64   34.61  5.58 12.97  .001
+PpoCombo-Ppo              88.12   29.45  146.80  4.68 14.00  .003
+StopNow-Ppo              -64.88 -112.56  -17.19  4.63  8.50  .009
+StopNowCombo-Ppo         -55.38 -102.92   -7.83  4.05  7.79  .024
+StopNow-PpoCombo        -153.00 -200.79 -105.21 10.90  8.50 <.001
+StopNowCombo-PpoCombo   -143.50 -191.15  -95.85 10.47  7.79 <.001
+StopNowCombo-StopNow       9.50   -7.58   26.58  1.76 12.76  .437
