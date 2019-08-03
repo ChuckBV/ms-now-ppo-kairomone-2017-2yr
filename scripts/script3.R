@@ -1,13 +1,11 @@
 #============================================================================
-# script2.R
+# script3.R
 #
-# Explore Expt, create Figure 2, and produce minimally sufficient data
-# for SAS
+# Explore results and generate table for spring 2018 experiment
 #
 # Parts
-# 1. Load 2017 lures test (line 31)
-# 2. Examination, output for SAS, and perform non-parametric ANOVA (line 52)
-# 3. Plot figure 2 (line 115)
+# 1. 
+# 2. 
 #
 #============================================================================
 
