@@ -46,11 +46,11 @@ Effect of trap characteristics on trap effectiveness
 
 ### Figure 1. Trap types including modified delta trap
 
-![Illustration of trap types](/doc/fig1.JPG)
+![Illustration of trap types](/doc/fig1.jpg)
 
 ### Figure 2. Adults per week in disrupted and non-disrupted almonds and pistachios in 2017
 
-![Box plot cumulative as wkly mean](/doc/fig2.JPG)
+![Box plot cumulative as wkly mean](/doc/fig2.jpg)
 
 ### Table 2. Adults per week three sites in spring spring 2018 
 
