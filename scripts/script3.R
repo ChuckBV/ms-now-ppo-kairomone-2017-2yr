@@ -17,6 +17,8 @@ library(tidyverse)
 library(lubridate)
 library(DescTools)
 library(viridis)
+library(multcompView)
+library(userfriendlyscience)
 
 # load functions
 se <- function(number){ 
@@ -252,3 +254,18 @@ hist(pist_no_sums$total)
 
 ggplot(pist_no_sums, aes(x = Treatment, y = total)) +
   geom_boxplot()
+
+Desc(total ~ Treatment, data = pist_no_sums)
+# Kruskal-Wallis rank sum test:
+#  Kruskal-Wallis chi-squared = 18.157, df = 4, p-value = 0.00115
+### This Box plot suggests heteroscadisty more than the ggplot boxplot
+
+test <- oneway(pist_no_sums$total, pist_no_sums$Treatment, posthoc = "games-howell", posthocLetters = TRUE)
+test
+
+pist_sums <- totals %>%
+  filter(Crop == "Pis" & MD == "Yes")
+
+pist_sums
+hist(pist_sums$total)
+Desc(total ~ Treatment, data = pist_sums)
