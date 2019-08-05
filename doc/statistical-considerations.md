@@ -17,3 +17,8 @@
 	ANOVA (Mangiafico 2015), and can be implemented with the R package 
 	userfriendlyscience (https://rpubs.com/aaronsc32/games-howell-test, 
 	Peters 2018 https://www.doi.org/10.17605/osf.io/txequ	
+
+## Experiment 2
+ - nb does not converge, and the ranges provided by Welch/games-howell
+ aren't intuitive. Need to provide these data as box plots rather than
+ as a table.

@@ -234,3 +234,21 @@ avg_wkly <- totals %>%
 avg_wkly
 
 write.csv(avg_wkly,"./output/y18-lures-cumulative.csv", row.names = FALSE)
+
+### Isolate Almond No-mating disruption and use histogram to examine 
+### frequency dist
+alm_no_sums <- totals %>%
+  + filter(Crop == "Alm" & MD == "No")
+
+hist(alm_no_sums)
+###  -- The histogram and the residuals test say that MIXED is appropriate
+ 
+pist_no_sums <- totals %>%
+  filter(Crop == "Pis" & MD == "No")
+
+hist(pist_no_sums$total)
+###  -- Troubling residuals for MIXED, and troubling Dev/df for GLMM with
+###  -- either poi or nb
+
+ggplot(pist_no_sums, aes(x = Treatment, y = total)) +
+  geom_boxplot()
