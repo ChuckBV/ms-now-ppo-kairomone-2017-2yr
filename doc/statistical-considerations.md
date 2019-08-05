@@ -22,3 +22,4 @@
  - nb does not converge, and the ranges provided by Welch/games-howell
  aren't intuitive. Need to provide these data as box plots rather than
  as a table.
+ - Or just do MIXED and get on with it
