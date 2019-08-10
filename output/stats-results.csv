@@ -3,6 +3,6 @@
 ,alm_nomd,script2,GLMM with nb dist,"SAS, GLIMMIX","F = 66.3, df = 4, 28; P < 0.001"
 ,pi_md,script2,GLMM with nb dist,"SAS, GLIMMIX","F = 109.96, df = 4, 28; P < 0.001"
 ,pi_nomd,script2,GLMM with nb dist,"SAS, GLIMMIX","F = 29.95, df = 4, 28; P < 0.001"
-2,alm_nomd,script3,Mix model ANOVA,"SAS, Proc MIXED",
-,pi_md,,,,
-,pi_nomd,,,,
+2,alm_nomd,script3,Mix model ANOVA,"SAS, Proc MIXED","F = 20.11, df = 4, 27; P < 0.001"
+,pi_md,script3,Mix model ANOVA,"SAS, Proc MIXED","F = 7.89, df = 4, 25; P < 0.001"
+,pi_nomd,script3,Mix model ANOVA,"SAS, Proc MIXED","F = 16.01, df = 4,27; P < 0.001"

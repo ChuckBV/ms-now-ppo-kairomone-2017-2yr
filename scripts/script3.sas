@@ -61,9 +61,9 @@ ods graphics off;
 
 proc mixed data = pi_nomd;
   class Treatment Rep;
-  model Total = Treatment / dist = nb;
+  model Total = Treatment;
   random Rep;
-  lsmeans Treatment / adjust=tukey lines;
+  lsmeans Treatment / adjust=tukey;
 run; 
 
 ods graphics on;
