@@ -18,6 +18,9 @@ NB. Files referenced below are found in https://github/chuckbv/Y18_abc_lures
 
 ![Illustration of trap types](/doc/fig1.jpg)
 
+### Table 2. Statistics for the experiments 
+![Table of statistical parameters](/doc/table2-stats.JPG)
+
 ### Figure 2. Adults per week in disrupted and non-disrupted almonds and pistachios in 2017
 
 ![Box plot cumulative as wkly mean](/doc/fig2.jpg)
