@@ -35,5 +35,13 @@ observations by site for three Sites (non-MD pistachio, non-MD almond, and
 MD pistachio). Outputs the cumulative counts data set for SAS, and
 creates a table pf treatment 
 
+### script3.sas
+
+Performs MIX ANOVA for three sites associated with the spring 2018 lure 
+comparison.
+
+### scrip4.R
+
+Lure comparisons from summer 2018
 
 

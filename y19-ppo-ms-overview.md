@@ -57,7 +57,7 @@ Effect of trap characteristics on trap effectiveness
 ![Cumaltive trap count weekly average spring 2018](doc/table2-lures-spring2018.JPG)
 
 ### Table 3. Comparison of PPO in bucket and sticky traps
-
+![Summer 2018 trap design experiments](doc/table3-traps)summer2018.JPG)
 
 
 ### Figure 3. Comparison of modified and unmodified sticky traps

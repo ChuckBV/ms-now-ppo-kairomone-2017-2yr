@@ -6,3 +6,5 @@
 2,alm_nomd,script3,Mix model ANOVA,"SAS, Proc MIXED","F = 20.11, df = 4, 27; P < 0.001"
 ,pi_md,script3,Mix model ANOVA,"SAS, Proc MIXED","F = 7.89, df = 4, 25; P < 0.001"
 ,pi_nomd,script3,Mix model ANOVA,"SAS, Proc MIXED","F = 16.01, df = 4,27; P < 0.001"
+3,traps_june,script4,GLMM with nb dist,"SAS, GLIMMIX","F = 45.11, df = 4, 28; P < 0.001"
+,traps_july,script4,Welch ANOVA with Games-Howell posthoc comp,"R, userfriendlyscience","F = 36.72, df = 3, 28; P < 0.001"
