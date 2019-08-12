@@ -4,11 +4,8 @@
 # Summer 2018 trap comparisons
 #
 # Parts
-# 1. Import data set to data frame (line 32)
-# 2. Characterize number of NAs, sampling dates, and weekly phenology 
-#    (line 65)
-# 3. Pool data across dates, output for SAS, and obtain a table of 
-#    mean and SE
+# 1. Count data, June 2018 trap test (line 25)
+# 2. Count data, July 2018 trap test (line 98)
 #
 #============================================================================
 
@@ -24,13 +21,6 @@ library(userfriendlyscience)
 se <- function(number){ 
   sd(number, na.rm = TRUE)/sqrt(sum(!is.na(number), na.rm = TRUE))
 }
-library(stringr)
-numextract <- function(string){ 
-  str_extract(string, "\\-*\\d+\\.*\\d*")
-} 
-lttrextract <-function(string){
-  str_extract(string, "\\-*\\D+\\.*\\D*")
-} 
 
 #== 1. Count data, June 2018 trap test ======================================
 
