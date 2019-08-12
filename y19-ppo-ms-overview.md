@@ -25,11 +25,11 @@ NB. Files referenced below are found in https://github/chuckbv/Y18_abc_lures
 
 ![Box plot cumulative as wkly mean](/doc/fig2.jpg)
 
-### Table 2. Adults per week three sites in spring spring 2018 
+### Table 3. Adults per week three sites in spring spring 2018 
 
 ![Cumaltive trap count weekly average spring 2018](doc/table2-lures-spring2018.JPG)
 
-### Table 3. Comparison of PPO in bucket and sticky traps
+### Table 4. Comparison of PPO in bucket and sticky traps
 ![Summer 2018 trap design experiments](doc/table3-traps_summer2018.JPG)
 
 
@@ -37,5 +37,4 @@ NB. Files referenced below are found in https://github/chuckbv/Y18_abc_lures
 ![Early summer 2019 delta trap experiment](doc/Y19_delta_trap_trials.jpg)
 
 
-
-### Table 4. Sex ratio in PPO and kairomone traps
+### Table 5. Sex ratio in PPO and kairomone traps
