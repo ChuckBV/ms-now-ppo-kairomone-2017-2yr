@@ -61,6 +61,7 @@ Effect of trap characteristics on trap effectiveness
 
 
 ### Figure 3. Comparison of modified and unmodified sticky traps
+![Early summer 2019 delta trap experiment](doc/Y19_delta_trap_trials.jpg)
 
 
 

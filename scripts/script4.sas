@@ -1,21 +1,21 @@
 /****************************************************************************
-/ script4.sas
+/ script5.sas
 / Repository: https://github/ChuckBV/ms-now-ppo-kairomone-2017-2yr
 /
-/ - Read in june and july trap count sums produced by script4.R
-/ - Perform GLIMMIX for each
+/ - Read in early summer delta trap test output by script5.R
+/ - Perform GLIMMIX
 /****************************************************************************/
 
 /*--------------------------- import June data -----------------------------*/
-proc import out = june
-  datafile = "y18_traps_june.csv"
+proc import out = delta
+  datafile = "Y19_delta_traps.csv"
   dbms=csv replace;
 run;
 
-proc glimmix data = June;
-  class Treatment Rep;
+proc glimmix data = delta;
+  class Treatment Replicate;
   model Count = Treatment / dist=nb;
-  random Rep;
+  random Replicate;
   lsmeans Treatment / adjust=tukey lines;
 run;
 
