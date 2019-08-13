@@ -59,9 +59,8 @@ y18_lures$Rep <- as.factor(y18_lures$Rep)
 y18_lures$Treatment <- NULL
 y18_lures$Crop <- as.factor(y18_lures$Crop)
 y18_lures$MD <- as.factor(y18_lures$MD)
-y18_lures$Female <- NULL
-y18_lures$EndDate <- as.Date(y18_lures$EndDate)
-y18_lures$StartDate <- as.Date(y18_lures$StartDate)
+y18_lures$EndDate <- as.Date(mdy(y18_lures$EndDate))
+y18_lures$StartDate <- as.Date(mdy(y18_lures$StartDate))
 
 y18_lures$TrtCode <- as.factor(y18_lures$TrtCode)
 y18_lures$Site <- as.factor(y18_lures$Site)
