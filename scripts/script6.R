@@ -133,6 +133,7 @@ y17_alm_pooled <- y17alm %>%
 y17_alm_pooled <- mutate(y17_alm_pooled, Prop_males = males/total_now) 
 
 
+
 #== 2. Generate ggplot2 plots from these data sets ==========================
 
 
