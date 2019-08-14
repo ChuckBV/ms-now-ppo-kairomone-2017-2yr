@@ -122,12 +122,43 @@ y17all$attractant <- as.factor(y17all$attractant)
 y17all <- mutate(y17all, phero_lure = ifelse(str_detect(Treatment,"Combo"),"Pheromone lure","No pheromone lure"))
 y17all$phero_lure <- as.factor(y17all$phero_lure)
 
+### Split by crop
+y17alm <- filter(y17all, Crop == "Alm")
+y17pis <- filter(y17all, Crop == "Pis")
+
+y17_alm_pooled <- y17alm %>%
+  group_by(MD,attractant,phero_lure,Date) %>%
+  summarise(total_now = sum(total_now),
+            males = sum(males))
+y17_alm_pooled <- mutate(y17_alm_pooled, Prop_males = males/total_now) 
+
 
 #== 2. Generate ggplot2 plots from these data sets ==========================
 
 
 ### y17_sexes
-ggplot(y17all, aes(x = Date, y = prop_males, size = total_now)) +
-  geom_jitter(position=position_jitter(w=0.1, h=0.), shape = 21) +
-  facet_grid(attractant ~ phero_lure)
+ggplot(y17alm) +
+  geom_jitter(data = y17alm,
+              mapping =  aes(x = Date, y = prop_males, size = total_now), 
+              position=position_jitter(w=0.1, h=0.), shape = 21) +
+  geom_point(data = y17_alm_pooled, 
+             mapping = aes(x = Date, y = Prop_males),
+             colour = "red", size = 2) +
+  facet_grid(attractant ~ phero_lure) +
+  ylim(0,1) +
+  theme_bw() + 
+  xlab("") +
+  ylab("Males as proportion\nof adults captured") +
+  theme(axis.text.x = element_text(color = "black", size = 10, angle = 45, hjust = 1),
+        axis.text.y = element_text(color = "black", size = 10),
+        axis.title.x = element_text(color = "black", size = 10),
+        axis.title.y = element_text(color = "black", size = 10),
+        legend.title = element_text(color = "black", size = 9),
+        legend.text = element_text(color = "black", size = 9))
+
+cor.test(~ Prop_males + Date,
+         data = y17_alm_pooled,
+         method = "pearson",
+         conf.level = 0.95)
+
   
