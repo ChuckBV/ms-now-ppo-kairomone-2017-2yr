@@ -131,14 +131,26 @@ y17_alm_pooled <- y17alm %>%
   summarise(total_now = sum(total_now),
             males = sum(males))
 y17_alm_pooled <- mutate(y17_alm_pooled, Prop_males = males/total_now) 
+y17_alm_pooled <- mutate(y17_alm_pooled, julian = yday(Date))
 
+write.csv(y17_alm_pooled,"data/intermediate/y17_alm_pooled.csv", row.names = FALSE)
+
+
+y17_pis_pooled <- y17pis %>%
+  group_by(MD,attractant,phero_lure,Date) %>%
+  summarise(total_now = sum(total_now),
+            males = sum(males))
+y17_pis_pooled <- mutate(y17_alm_pooled, Prop_males = males/total_now) 
+y17_pis_pooled <- mutate(y17_alm_pooled, julian = yday(Date))
+
+write.csv(y17_pis_pooled,"data/intermediate/y17_pis_pooled.csv", row.names = FALSE)
 
 
 #== 2. Generate ggplot2 plots from these data sets ==========================
 
 
 ### y17_sexes
-ggplot(y17alm) +
+p1 <- ggplot(y17alm) +
   geom_jitter(data = y17alm,
               mapping =  aes(x = Date, y = prop_males, size = total_now), 
               position=position_jitter(w=0.1, h=0.), shape = 21) +
@@ -157,9 +169,59 @@ ggplot(y17alm) +
         legend.title = element_text(color = "black", size = 9),
         legend.text = element_text(color = "black", size = 9))
 
-cor.test(~ Prop_males + Date,
+p1
+
+ggsave(filename = "y17alm_sex_ratios.eps", plot = p1, device = "eps", path = "./output", 
+       dpi = 300, width = 5.83, height = 5.83, units = "in")
+
+ggsave(filename = "y17alm_sex_ratios.jpg", plot = p1, device = "jpg", path = "./output", 
+       dpi = 300, width = 5.83, height = 5.83, units = "in")
+
+
+cor.test(~ Prop_males + julian,
          data = y17_alm_pooled,
          method = "pearson",
          conf.level = 0.95)
 
-  
+
+p2 <- ggplot(y17pis) +
+  geom_jitter(data = y17pis,
+              mapping =  aes(x = Date, y = prop_males, size = total_now), 
+              position=position_jitter(w=0.1, h=0.), shape = 21) +
+  geom_point(data = y17_pis_pooled, 
+             mapping = aes(x = Date, y = Prop_males),
+             colour = "red", size = 2) +
+  facet_grid(attractant ~ phero_lure) +
+  ylim(0,1) +
+  theme_bw() + 
+  xlab("") +
+  ylab("Males as proportion\nof adults captured") +
+  theme(axis.text.x = element_text(color = "black", size = 10, angle = 45, hjust = 1),
+        axis.text.y = element_text(color = "black", size = 10),
+        axis.title.x = element_text(color = "black", size = 10),
+        axis.title.y = element_text(color = "black", size = 10),
+        legend.title = element_text(color = "black", size = 9),
+        legend.text = element_text(color = "black", size = 9))
+
+p2
+
+ggsave(filename = "y17pis_sex_ratios.eps", plot = p2, device = "eps", path = "./output", 
+       dpi = 300, width = 5.83, height = 5.83, units = "in")
+
+ggsave(filename = "y17pis_sex_ratios.jpg", plot = p2, device = "jpg", path = "./output", 
+       dpi = 300, width = 5.83, height = 5.83, units = "in")
+
+
+cor.test(~ Prop_males + julian,
+         data = y17_pis_pooled,
+         method = "pearson",
+         conf.level = 0.95)
+
+Desc(y17_alm_pooled$Prop_males)
+
+### For 2017: Much variation, no significant correlation between proportion
+### of males in traps and Julian day. Great deal of variation but no trends
+### when sliced across all factors. Median 75% male for both PPO and kairomone,
+### both in the presence and in the absence of a pheromone lure.
+
+#=== 4. y18_lures data set ==================================================
