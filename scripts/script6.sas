@@ -16,7 +16,7 @@ run;
 proc print data=Almond (obs=6);
 run;
 
-proc corr data=almond;
+proc corr data=almond spearman;
   by MD attractant phero_lure;
   var Prop_males julian;
 run;
@@ -38,7 +38,7 @@ run;
 proc print data=pist (obs=6);
 run;
 
-proc corr data=pist;
+proc corr data=pist spearman;
   by MD attractant phero_lure;
   var Prop_males julian;
 run;
@@ -52,7 +52,7 @@ run;
 proc print data=Almond18 (obs=6);
 run;
 
-proc corr data=almond18;
+proc corr data=almond18 spearman;
   by MD attractant phero_lure;
   var Prop_males julian;
 run;

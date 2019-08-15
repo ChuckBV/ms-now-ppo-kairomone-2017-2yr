@@ -357,3 +357,27 @@ ggsave(filename = "y18pis_sex_ratios.jpg", plot = p4, device = "jpg", path = "./
 ### Both attractants were less suppressed earlier in spring
 ### Data suggests seasonal trend for both in this period
 ### No apparenht different in median proportion of males captured
+
+#== 5. Summer 2018 Trap Type data ===========================================
+
+head(y18_june,4)
+# A tibble: 4 x 15
+#     Rep TrapID TrtCode Treatment   Site     Crop  MD    Count  Male CantDist EndDate    StartDate  IntDays NowPrWk pMale
+#   <int>  <int> <fct>   <fct>       <fct>    <fct> <fct> <int> <int>    <int> <date>     <date>       <int>   <dbl> <dbl>
+# 1     1   1011 B       WingPheroP~ VistaVe~ Almo~ Yes      40    23        0 2018-06-29 2018-06-21       8   35    0.575
+# 2     1   1012 D       DeltPheroP~ VistaVe~ Almo~ Yes       4     2        0 2018-06-29 2018-06-21       8    3.5  0.5  
+# 3     1   1013 C       BuckPheroP~ VistaVe~ Almo~ Yes      10     4        0 2018-06-29 2018-06-21       8    8.75 0.4  
+# 4     1   1014 E       BuckPpo     VistaVe~ Almo~ Yes       2     1        0 2018-06-29 2018-06-21       8    1.75 0.5
+
+y18_june <- y18_june %>% filter(Count > 0 & Treatment != "WingPhero")
+
+Desc(pMale ~ Treatment, data = y18_june)
+
+head(y18_july,4)
+
+y18_july <- y18_july %>% filter(Male > 0 & Count > 0)
+y18_july <- y18_july %>% mutate(pMale = Male/Count)
+Desc(pMale ~ Treatment, data = y18_july)
+Desc(pMale ~ EndDate, data = y18_july)
+### These data say that the WingPheroPPO was capturing primarily
+### females, which goes against everything else I've seen. 
