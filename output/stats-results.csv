@@ -9,4 +9,4 @@
 3,traps_june,script4,GLMM with nb dist,"SAS, GLIMMIX","F = 45.11, df = 4, 28; P < 0.001"
 ,traps_july,script4,"Welch ANOVA, Games-Howell posthoc","R, userfriendlyscience","F = 36.72, df = 3, 28; P < 0.001"
 4,delta_traps,script5,GLMM with nb dist,"SAS, GLIMMIX","F = 34.87, df = 6,42; P < 0.001"
-5,y17_sex_ratios,script6,"Person correlation, summary","PROC CORR, PROC UNIVARIATE","Nothing significant, p50 = 75% male across the board"
+5,y18_sex_ratios,script6,"Person correlation, summary","PROC CORR, PROC UNIVARIATE","N = 5, rho = -0.9, P = 0.037"

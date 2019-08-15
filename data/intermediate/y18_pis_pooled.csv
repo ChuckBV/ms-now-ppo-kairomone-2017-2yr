@@ -1,0 +1,53 @@
+"MD","attractant","phero_lure","EndDate","total_now","males","Prop_males","julian"
+"No","Kairomone","No pheromone lure",2018-04-13,12,12,1,103
+"No","Kairomone","No pheromone lure",2018-04-27,98,87,0.887755102040816,117
+"No","Kairomone","No pheromone lure",2018-05-07,49,43,0.877551020408163,127
+"No","Kairomone","No pheromone lure",2018-05-17,28,24,0.857142857142857,137
+"No","Kairomone","No pheromone lure",2018-05-24,5,5,1,144
+"No","Kairomone","No pheromone lure",2018-05-29,4,4,1,149
+"No","Kairomone","No pheromone lure",2018-06-07,29,16,0.551724137931034,158
+"No","Kairomone","Pheromone lure",2018-04-13,59,58,0.983050847457627,103
+"No","Kairomone","Pheromone lure",2018-04-27,163,144,0.883435582822086,117
+"No","Kairomone","Pheromone lure",2018-05-07,94,84,0.893617021276596,127
+"No","Kairomone","Pheromone lure",2018-05-17,50,34,0.68,137
+"No","Kairomone","Pheromone lure",2018-05-24,16,15,0.9375,144
+"No","Kairomone","Pheromone lure",2018-05-29,15,15,1,149
+"No","Kairomone","Pheromone lure",2018-06-07,51,38,0.745098039215686,158
+"No","PPO","No pheromone lure",2018-04-13,39,36,0.923076923076923,103
+"No","PPO","No pheromone lure",2018-04-27,190,167,0.878947368421053,117
+"No","PPO","No pheromone lure",2018-05-07,105,93,0.885714285714286,127
+"No","PPO","No pheromone lure",2018-05-17,81,61,0.753086419753086,137
+"No","PPO","No pheromone lure",2018-05-24,38,34,0.894736842105263,144
+"No","PPO","No pheromone lure",2018-05-29,21,19,0.904761904761905,149
+"No","PPO","No pheromone lure",2018-06-07,80,50,0.625,158
+"No","PPO","Pheromone lure",2018-04-13,111,100,0.900900900900901,103
+"No","PPO","Pheromone lure",2018-04-27,195,174,0.892307692307692,117
+"No","PPO","Pheromone lure",2018-05-07,142,132,0.929577464788732,127
+"No","PPO","Pheromone lure",2018-05-17,88,71,0.806818181818182,137
+"No","PPO","Pheromone lure",2018-05-24,73,67,0.917808219178082,144
+"No","PPO","Pheromone lure",2018-05-29,53,41,0.773584905660377,149
+"No","PPO","Pheromone lure",2018-06-07,116,78,0.672413793103448,158
+"Yes","Kairomone","No pheromone lure",2018-04-30,83,66,0.795180722891566,120
+"Yes","Kairomone","No pheromone lure",2018-05-08,60,59,0.983333333333333,128
+"Yes","Kairomone","No pheromone lure",2018-05-15,28,16,0.571428571428571,135
+"Yes","Kairomone","No pheromone lure",2018-05-23,8,7,0.875,143
+"Yes","Kairomone","No pheromone lure",2018-05-31,0,0,NA,151
+"Yes","Kairomone","No pheromone lure",2018-06-12,3,0,0,163
+"Yes","Kairomone","Pheromone lure",2018-04-30,312,276,0.884615384615385,120
+"Yes","Kairomone","Pheromone lure",2018-05-08,169,152,0.899408284023669,128
+"Yes","Kairomone","Pheromone lure",2018-05-15,52,26,0.5,135
+"Yes","Kairomone","Pheromone lure",2018-05-23,8,8,1,143
+"Yes","Kairomone","Pheromone lure",2018-05-31,0,0,NA,151
+"Yes","Kairomone","Pheromone lure",2018-06-12,8,3,0.375,163
+"Yes","PPO","No pheromone lure",2018-04-30,120,99,0.825,120
+"Yes","PPO","No pheromone lure",2018-05-08,174,145,0.833333333333333,128
+"Yes","PPO","No pheromone lure",2018-05-15,71,45,0.633802816901408,135
+"Yes","PPO","No pheromone lure",2018-05-23,14,10,0.714285714285714,143
+"Yes","PPO","No pheromone lure",2018-05-31,2,2,1,151
+"Yes","PPO","No pheromone lure",2018-06-12,3,2,0.666666666666667,163
+"Yes","PPO","Pheromone lure",2018-04-30,198,169,0.853535353535353,120
+"Yes","PPO","Pheromone lure",2018-05-08,186,154,0.827956989247312,128
+"Yes","PPO","Pheromone lure",2018-05-15,110,82,0.745454545454545,135
+"Yes","PPO","Pheromone lure",2018-05-23,31,24,0.774193548387097,143
+"Yes","PPO","Pheromone lure",2018-05-31,2,2,1,151
+"Yes","PPO","Pheromone lure",2018-06-12,22,15,0.681818181818182,163
