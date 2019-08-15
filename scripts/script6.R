@@ -379,5 +379,9 @@ y18_july <- y18_july %>% filter(Male > 0 & Count > 0)
 y18_july <- y18_july %>% mutate(pMale = Male/Count)
 Desc(pMale ~ Treatment, data = y18_july)
 Desc(pMale ~ EndDate, data = y18_july)
-### These data say that the WingPheroPPO was capturing primarily
-### females, which goes against everything else I've seen. 
+### The data don't make sense, I cannot find the data sheets in the 3-ring
+### binders I still have for 2018, and some employees involved with this
+### were not dependable. I therefore regard the Male field in this data set
+### as one big vector of NAs, and should be Male <- NULL
+
+#== 

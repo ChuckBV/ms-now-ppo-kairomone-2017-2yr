@@ -78,3 +78,32 @@ proc corr data=pist;
   by MD attractant phero_lure;
   var Prop_males julian;
 run;
+
+/*--------------------------- import 2018 june lure data ------------------------*/
+proc import out=y17junbuckets
+  datafile="y18_june.csv"
+  dbms=csv replace;
+run;
+
+proc sort data=y17junbuckets;
+  by Treatment Rep;
+run;
+proc means n sum noprint data=y17junbuckets;
+  by Treatment Rep;
+  var Count Male;
+  output out=junebucket (drop = _type_ _freq_)
+         n(Count Male) = nCount nMale
+		 sum(Count Male)=;
+run;
+
+data junebucket;
+  set junebucket;
+  where nCount=2;
+run;
+
+proc glimmix data=junebucket;
+  class Treatment Rep;
+  model Male/Count = Treatment / dist=binomial;
+  random rep;
+  lsmeans Treatment / adjust=tukey lines;
+run;
