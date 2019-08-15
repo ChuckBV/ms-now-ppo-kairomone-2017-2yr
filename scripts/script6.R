@@ -74,6 +74,10 @@ head(y18_july,4)
 
 #== 2. Wrangle y17_sexes to allow more direct examination of sex ratio ====
 
+### 2017 No significant differences associated with MD status, crop,
+### attractant, or pheromone co-attractant. Median was 0.75 males,
+### p25 was 0.625, and p75 was 0.875.
+
 ### Strategy: 1) Obtain a summary data set showing total NOW for each 
 ### trap x data. 2) Merge this summary back with the male data set. Now have
 ### total and males, like the other data set.
@@ -372,6 +376,30 @@ head(y18_june,4)
 y18_june <- y18_june %>% filter(Count > 0 & Treatment != "WingPhero")
 
 Desc(pMale ~ Treatment, data = y18_june)
+Desc(pMale ~ EndDate, data = y18_june)
+
+p5 <- ggplot(y18_june, aes(x = Treatment, y = pMale))+
+  geom_boxplot() +
+  ylim(0,1) +
+  theme_bw() + 
+  xlab("") +
+  ylab("Males as proportion\nof adults captured") +
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_text(color = "black", size = 8),
+        axis.title.x = element_text(color = "black", size = 9),
+        axis.title.y = element_text(color = "black", size = 9),
+        legend.title = element_text(color = "black", size = 9),
+        legend.text = element_text(color = "black", size = 9))
+
+p5
+
+ggsave(filename = "y18junbucket_sex_ratios.eps", plot = p5, device = "eps", path = "./output", 
+       dpi = 300, width = 2.83, height = 2.13, units = "in")
+
+ggsave(filename = "y18junbucket_sex_ratios.jpg", plot = p5, device = "jpg", path = "./output", 
+       dpi = 300, width = 2.83, height = 2.13, units = "in")
+
+write.csv(y18_june,"./data/intermediate/y18_june.csv", row.names = FALSE)
 
 head(y18_july,4)
 
