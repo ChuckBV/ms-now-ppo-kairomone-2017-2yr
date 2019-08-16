@@ -87,3 +87,39 @@ ggsave(filename = "y18alm_sex_ratios.jpg", plot = p3, device = "jpg", path = "./
 
 #== Figure for June Trap Type comparison ====================================
 
+y18_june <- as_tibble(read.csv("./data/Y18b_ppo_buckets_june.csv"))
+
+y18_june$EndDate <- as.Date(mdy(y18_june$EndDate))
+y18_june$StartDate <- as.Date(mdy(y18_june$StartDate))
+y18_june$IntDays <- as.integer(y18_june$EndDate - y18_june$StartDate)
+y18_june$NowPrWk <- y18_june$Count/y18_june$IntDays*7
+## Derive proportion of males captured in traps
+y18_june$pMale <- y18_june$Male/(y18_june$Count - y18_june$CantDist)
+
+## Reorder treatment factor
+y18_june_trts <- c("WingPhero","WingPheroPpo","DeltPheroPpo","BuckPpo","BuckPheroPpo")  
+y18_june$Treatment <- fct_relevel(y18_june$Treatment,y18_june_trts)
+
+
+y18_june <- y18_june %>% filter(Count > 0 & Treatment != "WingPhero")
+
+p5 <- ggplot(y18_june, aes(x = Treatment, y = pMale))+
+  geom_boxplot() +
+  ylim(0,1) +
+  theme_bw() + 
+  xlab("") +
+  ylab("Males as proportion\nof adults captured") +
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_text(color = "black", size = 8),
+        axis.title.x = element_text(color = "black", size = 9),
+        axis.title.y = element_text(color = "black", size = 9),
+        legend.title = element_text(color = "black", size = 9),
+        legend.text = element_text(color = "black", size = 9))
+
+p5
+
+ggsave(filename = "y18junbucket_sex_ratios.eps", plot = p5, device = "eps", path = "./output", 
+       dpi = 300, width = 2.83, height = 2.13, units = "in")
+
+ggsave(filename = "y18junbucket_sex_ratios.jpg", plot = p5, device = "jpg", path = "./output", 
+       dpi = 300, width = 2.83, height = 2.13, units = "in")
