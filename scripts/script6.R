@@ -9,7 +9,7 @@
 #    (line 73)
 # 3. Generate ggplot2 plots from the 2017 data set (line 149)
 # 4. y18_lures data sets (line 228)
-# 5. 
+# 5. Summer 2018 Trap Type data
 # 
 #
 #============================================================================
@@ -127,6 +127,8 @@ y17all$attractant <- as.factor(y17all$attractant)
 ### Create variable for co-presentation with pheromone
 y17all <- mutate(y17all, phero_lure = ifelse(str_detect(Treatment,"Combo"),"Pheromone lure","No pheromone lure"))
 y17all$phero_lure <- as.factor(y17all$phero_lure)
+
+write.csv(y17all,"./data/intermediate/y17_sex_ratio_all_processed.csv", row.names = FALSE)
 
 ### Split by crop
 y17alm <- filter(y17all, Crop == "Alm")
@@ -275,6 +277,8 @@ y18_lures$attractant <- as.factor(y18_lures$attractant)
 ### Create variable for co-presentation with pheromone
 y18_lures <- mutate(y18_lures, phero_lure = ifelse(str_detect(Treatment,"Combo"),"Pheromone lure","No pheromone lure"))
 y18_lures$phero_lure <- as.factor(y18_lures$phero_lure)
+
+write.csv(y18_lures,"data/intermediate/y18_lures_processed.csv", row.names = FALSE)
 
 ### Split by crop
 y18alm <- filter(y18_lures, Crop == "Alm")
