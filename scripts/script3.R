@@ -237,6 +237,11 @@ avg_wkly
 
 write.csv(avg_wkly,"./output/y18-lures-cumulative.csv", row.names = FALSE)
 
+
+ggplot(totals, aes(x = Treatment, y = perwk)) +
+  geom_boxplot() +
+  facet_grid(Crop ~ MD)
+
 ### Isolate Almond No-mating disruption and use histogram to examine 
 ### frequency dist
 alm_no_sums <- totals %>%
