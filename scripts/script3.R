@@ -4,11 +4,13 @@
 # Explore results and generate table for spring 2018 experiment
 #
 # Parts
-# 1. Import data set to data frame (line 32)
+# 1. Import count data, 2018 lures test (line 32)
 # 2. Characterize number of NAs, sampling dates, and weekly phenology 
 #    (line 65)
-# 3. Pool data across dates, output for SAS, and obtain a table of 
-#    mean and SE
+# 3. Get plots of weekly means for the three sites (non-MD alm and
+#    pistachio from Kettleman, MD pist from Coalinga) (line 94)
+# 4. Pool data across dates, output for SAS, and obtain a table of 
+#    mean and SE. NB First week of MD pist excluded as not typical
 #
 #============================================================================
 
@@ -24,15 +26,8 @@ library(userfriendlyscience)
 se <- function(number){ 
   sd(number, na.rm = TRUE)/sqrt(sum(!is.na(number), na.rm = TRUE))
 }
-library(stringr)
-numextract <- function(string){ 
-  str_extract(string, "\\-*\\d+\\.*\\d*")
-} 
-lttrextract <-function(string){
-  str_extract(string, "\\-*\\D+\\.*\\D*")
-} 
 
-#== 1. Count data, 2017 lures test ==========================================
+#== 1. Import count data, 2018 lures test ===================================
 
 counts <- read_csv("./data/Y18_lures.csv")
 ### in script1 this data set is assigned to y18_lures. Here generic "counts" 
@@ -95,6 +90,8 @@ counts %>%
 alm_nomd <- counts %>% filter(Crop == "Alm" & MD == "No")
 pis_nomd <- counts %>% filter(Crop == "Pis" & MD == "No")
 pis_md <- counts %>% filter(Crop == "Pis" & MD == "Yes")
+
+#== 3. Get plots of weekly means ============================================
 
 ### Get means and weekly plot for almonds, no mating disruption
 alm_nomd <- alm_nomd %>%
@@ -193,7 +190,50 @@ p3
 ggsave(filename = "y18-lures-wkly-pis-md.jpg", plot = p3, device = "jpg", path = "./output", 
        dpi = 300, width = 5.83, height = 3.0, units = "in")
 
-#== 3. Pool males captured across all dates, output to SAS, make table ======
+#== 4. Pool males captured across all dates, output to SAS, make table ======
+
+### Check weeks for MD Pistachio
+counts %>%
+  group_by(Crop,MD,Site) %>%
+  summarise(nObs = n())
+# A tibble: 3 x 4
+#  Groups:   Crop, MD [3]
+#   Crop  MD    Site        nObs
+#   <fct> <fct> <fct>      <int>
+# 1 Alm   No    Kettleman    240
+# 2 Pis   No    Kettleman    280
+# 3 Pis   Yes   VistaVerde   240
+
+counts %>%
+  filter(Site == "VistaVerde") %>%
+  group_by(EndDate) %>%
+  summarise(nObs = sum(!is.na(Count)))
+# A tibble: 6 x 2
+#  EndDate     nObs
+#   <date>     <int>
+# 1 2018-04-30    37
+# 2 2018-05-08    37
+# 3 2018-05-15    48
+# 4 2018-05-23    40
+# 5 2018-05-31    40
+# 6 2018-06-12    40
+
+counts %>%
+  filter(EndDate < as.Date("2018-05-01")) %>%
+  group_by(Crop,MD,EndDate) %>%
+  summarise(nObs = sum(!is.na(Count)))
+# A tibble: 4 x 4
+# Groups:   Crop, MD [3]
+# Crop  MD    EndDate     nObs
+# <fct> <fct> <date>     <int>
+# 1 Alm   No    2018-04-27    39
+# 2 Pis   No    2018-04-13    40
+# 3 Pis   No    2018-04-27    40
+# 4 Pis   Yes   2018-04-30    37
+
+### Dropping obs with EndDate 2018-04-30 will drop what we need to drop
+counts <- filter(counts,EndDate != as.Date("2018-04-30"))
+# obs drop from 760 to 720
 
 ### Examine extent to which NAs mess up the data
 test <- counts %>% 
@@ -214,11 +254,12 @@ totals <- counts2 %>%
 totals %>%
   group_by(nObs) %>%
   summarise(nTimes = n())
-# A tibble: 2 x 2
-#    nObs nTimes
+# A tibble: 3 x 2
+# nObs nTimes
 #   <int>  <int>
-# 1     6     76
-# 2     7     39
+# 1     5     37
+# 2     6     39
+# 3     7     39
 
 write.csv(totals, "./data/intermediate/y18lures_to_sas.csv", row.names = FALSE)
 
