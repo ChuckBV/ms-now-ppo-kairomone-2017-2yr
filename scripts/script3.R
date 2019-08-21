@@ -10,8 +10,10 @@
 # 3. Get plots of weekly means for the three sites (non-MD alm and
 #    pistachio from Kettleman, MD pist from Coalinga) (line 94)
 # 4. Pool data across dates, output for SAS, and obtain a table of 
-#    mean and SE. NB First week of MD pist excluded as not typical
-#
+#    mean and SE. NB First week of MD pist excluded as not typical (line 193)
+#    Note that boxplots also produced for three available levels of
+#    Crop x MD
+# 5.
 #============================================================================
 
 # load libaries
@@ -283,7 +285,8 @@ ggplot(totals, aes(x = Treatment, y = perwk)) +
   geom_boxplot() +
   facet_grid(Crop ~ MD)
 
-### Isolate Almond No-mating disruption and use histogram to examine 
+
+#== 5. Conduct Welch ANOVA and  
 ### frequency dist
 alm_no_sums <- totals %>%
   filter(Crop == "Alm" & MD == "No")
