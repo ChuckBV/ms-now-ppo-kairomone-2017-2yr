@@ -42,8 +42,29 @@ The script is a mess.
 Performs MIX ANOVA for three sites associated with the spring 2018 lure 
 comparison.
 
-### scrip4.R
+### script4.R
 
-Lure comparisons from summer 2018
+Two experiments on impact of trap design during the summer of 2018.
+"June" expt -- Compare wing, delta, and bucket traps
+"July-Sep" expt -- Continuation using a modified delta trap
+
+### script5.R and script5.sas
+
+Summer 2019 experiment on contribution of elements of trap design
+and attractant to adults captured
+
+### script6.R
+
+A long, disorganized slog through the data sets for which sex ratio data
+are available. A disorganized mess, but primarily demonstrates that there
+is "no there there" with respect to differences in sex ratio by other
+factors involved in this study.
+
+### script6b.R, script6.sas
+
+Provides graphing and statistical analysis for the samples for which I
+do believe I can show statistically significant trends (if just barely)
+
+
 
 

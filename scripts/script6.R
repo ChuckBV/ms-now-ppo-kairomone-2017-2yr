@@ -185,6 +185,20 @@ ggsave(filename = "y17alm_sex_ratios.eps", plot = p1, device = "eps", path = "./
 ggsave(filename = "y17alm_sex_ratios.jpg", plot = p1, device = "jpg", path = "./output", 
        dpi = 300, width = 5.83, height = 5.83, units = "in")
 
+ 
+### Histograms
+ggplot(y17alm, aes(x = prop_males)) +
+  geom_histogram() +
+  facet_grid(phero_lure ~ .)
+
+p1b <- ggplot(y17alm, aes(x = prop_males)) +
+  geom_histogram() +
+  facet_grid(MD ~ attractant)
+p1b
+ 
+ggsave(filename = "y17alm_sex_ratio_histograms.jpg", plot = p1b, device = "jpg", path = "./output", 
+       dpi = 300, width = 5.83, height = 5.83, units = "in")
+
 
 cor.test(~ Prop_males + julian,
          data = y17_alm_pooled,
@@ -213,6 +227,8 @@ p2 <- ggplot(y17pis) +
 
 p2
 
+
+
 ggsave(filename = "y17pis_sex_ratios.eps", plot = p2, device = "eps", path = "./output", 
        dpi = 300, width = 5.83, height = 5.83, units = "in")
 
@@ -222,7 +238,20 @@ ggsave(filename = "y17pis_sex_ratios.jpg", plot = p2, device = "jpg", path = "./
 
 cor.test(~ Prop_males + julian,
          data = y17_pis_pooled,
-         method = "pearson",
+         method = "pearson")
+
+ggplot(y17pis, aes(x = prop_males)) +
+  geom_histogram() +
+  facet_grid(phero_lure ~ )
+         
+p2b <- ggplot(y17alm, aes(x = prop_males)) +
+       geom_histogram() +
+       facet_grid(MD ~ attractant)
+
+p2b
+         
+         ggsave(filename = "y17alm_sex_ratio_histograms.jpg", plot = p1b, device = "jpg", path = "./output", 
+                dpi = 300, width = 5.83, height = 5.83, units = "in")
          conf.level = 0.95)
 
 Desc(y17_alm_pooled$Prop_males)
