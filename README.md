@@ -16,12 +16,15 @@ included:
 
 Reads *.csv files for each of the experiments above into data frames
 
-### script2.R 
+### script2.R, script2b.R 
 
 Exploration and analysis of the 2017 lure trials. Imports the data into a 
 dataframe, overview and ouput for analysis in SAS, produce plot in ggplot
 for Figure 2, and peforms a nonparametric ANOVA and post-test for 
 non-MD almonds (did not converge in SAS GLIMMIX)
+
+script2b.R compares the percent of empty (zero-count) traps with PPO-only
+and kairomone-only traps in 2017.
 
 ### script2.sas
 
