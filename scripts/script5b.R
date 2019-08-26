@@ -52,3 +52,30 @@ delta %>%
   summarise(nZero = sum(Count == 0, na.rm = TRUE),
             nObs = sum(!is.na(Count)),
             pct_zero = 100*nZero/nObs)
+
+### Answer Brad Higbee's query about 40%
+dltppo <- delta %>% 
+  filter(Treatment == "DeltaPpo") %>%
+  arrange(Count)
+# Traps with 0 counts in 18 out of 47 rows
+
+dltppo
+# Compare this with delta2, the sums data set used in script5.$ to generate
+# Fig. 3
+
+dltppo2 <- delta2 %>% 
+  filter(Treatment == "DeltaPpo") %>%
+  arrange(Count)
+dltppo2
+# A tibble: 8 x 4
+# Groups:   Treatment [1]
+#   Treatment Replicate Count perwk
+#   <fct>         <dbl> <dbl> <dbl>
+# 1 DeltaPpo          2     4 0.519
+# 2 DeltaPpo          7     4 0.519
+# 3 DeltaPpo          8     4 0.519
+# 4 DeltaPpo          6     8 1.04 
+# 5 DeltaPpo          3     9 1.17 
+# 6 DeltaPpo          4    12 1.56 
+# 7 DeltaPpo          5    13 1.69 
+# 8 DeltaPpo          1    16 2.07 

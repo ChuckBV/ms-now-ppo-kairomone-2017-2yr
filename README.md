@@ -56,6 +56,10 @@ Two experiments on impact of trap design during the summer of 2018.
 Summer 2019 experiment on contribution of elements of trap design
 and attractant to adults captured
 
+### script5b.R
+
+Examine proportion of empty traps in the summer 2019 trap comparisons
+
 ### script6.R
 
 A long, disorganized slog through the data sets for which sex ratio data
