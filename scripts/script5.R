@@ -16,6 +16,7 @@
 library(tidyverse)
 library(lubridate)
 library(DescTools)
+library(viridisLite)
 library(viridis)
 library(multcompView)
 library(userfriendlyscience)
@@ -71,28 +72,45 @@ delta2 <- delta %>%
 
 delta2
 
+trt
+
 write.csv(delta2,"./data/intermediate/y19_delta_traps.csv", row.names = FALSE)
 
 #== 3. Plot data ============================================================
 
 delta2$perwk <- delta2$Count/nmbr_wks
-delta2
+delta2 # no NAs in perwk
+
+trtmns <- delta2 %>% 
+  group_by(Treatment) %>% 
+  summarise(nObs = n(),
+            avg = mean(perwk),
+            sem = se(perwk))
+
+mnsep_vec <- c("e","ab","a","d","c","c","bc")
+
+trtmns <- add_column(trtmns,mnsep = mnsep_vec)
+
 
 p1 <-
   ggplot(delta2, aes(x = Treatment, y = perwk)) +
   geom_boxplot() + 
-  theme_bw() +
+  geom_text(data = trtmns, mapping = aes(label=mnsep, x = Treatment, y = avg, hjust=0, vjust=-4),  inherit.aes = FALSE) +
+  theme_bw()
+p1
 
+p1 <- p1 +
   #ylim(0,100) +
   xlab("") +
   ylab("NOW per trap per week") +
-  theme(axis.text.x = element_blank(),
-        #axis.text.x = element_text(color = "black", size = 7, angle = 45, hjust = 1),
-        axis.text.y = element_text(color = "black", size = 8),
-        axis.title.x = element_text(color = "black", size = 9),
-        axis.title.y = element_text(color = "black", size = 9),
-        legend.title = element_text(color = "black", size = 14),
-        legend.text = element_text(color = "black", size = 14))
+  theme(#axis.text.x = element_blank(),
+        axis.text.x = element_text(color = "black", size = 10, angle = 45, hjust = 1),
+        axis.text.y = element_text(color = "black", size = 10),
+        axis.title.x = element_text(color = "black", size = 12),
+        axis.title.y = element_text(color = "black", size = 12))
+        #,
+        #legend.title = element_text(color = "black", size = 14),
+        #legend.text = element_text(color = "black", size = 14))
 
 p1
 

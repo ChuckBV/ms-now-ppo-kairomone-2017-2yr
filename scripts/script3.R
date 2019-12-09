@@ -13,7 +13,7 @@
 #    mean and SE. NB First week of MD pist excluded as not typical (line 193)
 #    Note that boxplots also produced for three available levels of
 #    Crop x MD
-# 5.
+# 5.  Conduct Welch ANOVA (line 289)
 #============================================================================
 
 # load libaries
@@ -286,7 +286,7 @@ ggplot(totals, aes(x = Treatment, y = perwk)) +
   facet_grid(Crop ~ MD)
 
 
-#== 5. Conduct Welch ANOVA and  
+#== 5. Conduct Welch ANOVA and  ======
 ### frequency dist
 alm_no_sums <- totals %>%
   filter(Crop == "Alm" & MD == "No")
