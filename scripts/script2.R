@@ -105,9 +105,10 @@ one.way
 ### Get factor names needed for plot labels
 levels(counts$Crop)[levels(counts$Crop) == "Alm"] <- "Almond"
 levels(counts$Crop)[levels(counts$Crop) == "Pis"] <- "Pistachio"
-levels(counts$MD)[levels(counts$MD) == "No"] <- "Non-disrupted"
+levels(counts$MD)[levels(counts$MD) == "No"] <- "No Mating Disruption"
 levels(counts$MD)[levels(counts$MD) == "Yes"] <- "Mating Disruption"
 
+levels(counts$Treatment)[levels(counts$Treatment) == "NowBiolure"] <- "Pheromone"
 levels(counts$Treatment)[levels(counts$Treatment) == "StopNow"] <- "Kairomone"
 levels(counts$Treatment)[levels(counts$Treatment) == "StopNowCombo"] <- "KairomoneCombo"
 unique(counts$Treatment)
@@ -122,27 +123,80 @@ trapmeans <- counts %>%
   summarise(nObs = n(),
             avg = mean(Count))
 
+### Generate Season-long treatment means and output
+trtmeans <- trapmeans %>% 
+  group_by(Crop, MD, Treatment) %>%
+  summarise(nObs = n(),
+            avg = mean(avg))
+
+write.csv(trtmeans, "./output/y17trap_trtmeans.csv", row.names = FALSE)
+
+### Manually inert means separators, and import again
+#Get mean separations in vector to avoid re-write when tweaking
+#The data frame.
+trtmeans 
+# A tibble: 20 x 6
+#    Crop      MD                   Treatment       nObs    avg mnsep
+#    <chr>     <fct>                <fct>          <dbl>  <dbl> <chr>
+#  1 Almond    No Mating Disruption NowBiolure         8 11.0   c    
+#  2 Almond    No Mating Disruption Ppo                8 18.7   b    
+#  3 Almond    No Mating Disruption PpoCombo           8 32.2   a    
+#  4 Almond    No Mating Disruption Kairomone          8  3.76  d    
+#  5 Almond    No Mating Disruption KairomoneCombo     8 16.1   bc   
+#  6 Almond    Mating Disruption    NowBiolure         8  0.280 c    
+#  7 Almond    Mating Disruption    Ppo                8  6.47  b    
+#  8 Almond    Mating Disruption    PpoCombo           8 13.0   a    
+#  9 Almond    Mating Disruption    Kairomone          8  1.28  c    
+# 10 Almond    Mating Disruption    KairomoneCombo     8  2.02  c    
+# 11 Pistachio No Mating Disruption NowBiolure         8  5.92  c    
+# 12 Pistachio No Mating Disruption Ppo                8 11.1   b    
+# 13 Pistachio No Mating Disruption PpoCombo           8 17.2   a    
+# 14 Pistachio No Mating Disruption Kairomone          8  4.56  c    
+# 15 Pistachio No Mating Disruption KairomoneCombo     8 11.7   ab   
+# 16 Pistachio Mating Disruption    NowBiolure         8  0.375 d    
+# 17 Pistachio Mating Disruption    Ppo                8  6.42  b    
+# 18 Pistachio Mating Disruption    PpoCombo           8 13.5   a    
+# 19 Pistachio Mating Disruption    Kairomone          8  1.92  cd   
+# 20 Pistachio Mating Disruption    KairomoneCombo     8  4.04  bc
+
+mnsep_vec <- as.vector(trtmeans$mnsep)
+mnsep_vec
+# [1] "c"  "b"  "a"  "d"  "bc" "c"  "b"  "a"  "c"  "c"  "c"  "b"  "a"  "c"  "ab" "d"  "b"  "a"  "cd" "bc"
+mnsep_vec <- c("c","b","a","d","bc","c","b","a","c","c","c","b","a","c","ab","d","b","a","cd","bc")
+mnsep <- data.frame(mnsep_vec)
+mnsep <- rename(mnsep, mnsep = mnsep_vec)
+
+
+###
+trtmeans <- add_column(trtmeans,mnsep = mnsep_vec)
+#trtmeans <- mutate(trtmeans, Treatment = factor(Treatment, levels = c("Pheromone","Ppo","PpoCombo","Kairomone","KairomoneCombo")))
+#trtmeans <- mutate(trtmeans, MD = factor(MD, levels = c("No Mating Disruption","Mating Disruption")))
+#Error: Column `MD` can't be modified because it's a grouping variable
+
+### Generate basic plot
 p2 <-
   ggplot(trapmeans, aes(x = Treatment, y = avg)) +
   geom_boxplot() + 
   theme_bw() +
-  facet_grid(Crop ~ MD) +
+  geom_text(data = trtmeans, mapping = aes(label=mnsep, x = Treatment, y = avg, hjust=0, vjust=-4),  inherit.aes = FALSE) +
+  facet_grid(Crop ~ MD)
+
+p2  
+### Customize for EntSoc 1 column (half-page)  
   
-  #ylim(0,100) +
+p2 <- p2 +
   xlab("") +
   ylab("NOW per trap per week") +
-  theme(axis.text.x = element_blank(),
-        #axis.text.x = element_text(color = "black", size = 7, angle = 45, hjust = 1),
-        axis.text.y = element_text(color = "black", size = 8),
-        axis.title.x = element_text(color = "black", size = 9),
-        axis.title.y = element_text(color = "black", size = 9),
-        legend.title = element_text(color = "black", size = 14),
-        legend.text = element_text(color = "black", size = 14))
+  theme(#axis.text.x = element_blank(),
+        axis.text.x = element_text(color = "black", size = 10, angle = 45, hjust = 1),
+        axis.text.y = element_text(color = "black", size = 10),
+        axis.title.x = element_text(color = "black", size = 12),
+        axis.title.y = element_text(color = "black", size = 12),
+        legend.title = element_text(color = "black", size = 12),
+        legend.text = element_text(color = "black", size = 12))
 
 p2
-
-
-ggsave(filename = "Y17a2_season_means.eps", p2, path = "./output",
+ggsave(filename = "Y17a2_season_means_wholepage.eps", p2, path = "./output",
        width = 5.83, height = 5.83, dpi = 300, units = "in", device='eps')
 
 ### imported into PowerPoint, where treatment titles and multiple

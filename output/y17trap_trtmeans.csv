@@ -1,0 +1,21 @@
+"Crop","MD","Treatment","nObs","avg"
+"Almond","No Mating Disruption","Pheromone",8,10.9732142857143
+"Almond","No Mating Disruption","Ppo",8,18.6517857142857
+"Almond","No Mating Disruption","PpoCombo",8,32.2232142857143
+"Almond","No Mating Disruption","Kairomone",8,3.76373626373626
+"Almond","No Mating Disruption","KairomoneCombo",8,16.1047077922078
+"Almond","Mating Disruption","Pheromone",8,0.279647435897436
+"Almond","Mating Disruption","Ppo",8,6.47217365967366
+"Almond","Mating Disruption","PpoCombo",8,13.0192307692308
+"Almond","Mating Disruption","Kairomone",8,1.27505827505828
+"Almond","Mating Disruption","KairomoneCombo",8,2.02163461538462
+"Pistachio","No Mating Disruption","Pheromone",8,5.91964285714286
+"Pistachio","No Mating Disruption","Ppo",8,11.1071428571429
+"Pistachio","No Mating Disruption","PpoCombo",8,17.165521978022
+"Pistachio","No Mating Disruption","Kairomone",8,4.55654761904762
+"Pistachio","No Mating Disruption","KairomoneCombo",8,11.7101648351648
+"Pistachio","Mating Disruption","Pheromone",8,0.375
+"Pistachio","Mating Disruption","Ppo",8,6.42307692307692
+"Pistachio","Mating Disruption","PpoCombo",8,13.4615384615385
+"Pistachio","Mating Disruption","Kairomone",8,1.91987179487179
+"Pistachio","Mating Disruption","KairomoneCombo",8,4.03846153846154

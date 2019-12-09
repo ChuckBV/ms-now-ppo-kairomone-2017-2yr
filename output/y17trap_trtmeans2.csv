@@ -1,0 +1,21 @@
+Crop,MD,Treatment,nObs,avg,mnsep
+Almond,No Mating Disruption,NowBiolure,8,10.97321429,c
+Almond,No Mating Disruption,Ppo,8,18.65178571,b
+Almond,No Mating Disruption,PpoCombo,8,32.22321429,a
+Almond,No Mating Disruption,Kairomone,8,3.763736264,d
+Almond,No Mating Disruption,KairomoneCombo,8,16.10470779,bc
+Almond,Mating Disruption,NowBiolure,8,0.279647436,c
+Almond,Mating Disruption,Ppo,8,6.47217366,b
+Almond,Mating Disruption,PpoCombo,8,13.01923077,a
+Almond,Mating Disruption,Kairomone,8,1.275058275,c
+Almond,Mating Disruption,KairomoneCombo,8,2.021634615,c
+Pistachio,No Mating Disruption,NowBiolure,8,5.919642857,c
+Pistachio,No Mating Disruption,Ppo,8,11.10714286,b
+Pistachio,No Mating Disruption,PpoCombo,8,17.16552198,a
+Pistachio,No Mating Disruption,Kairomone,8,4.556547619,c
+Pistachio,No Mating Disruption,KairomoneCombo,8,11.71016484,ab
+Pistachio,Mating Disruption,NowBiolure,8,0.375,d
+Pistachio,Mating Disruption,Ppo,8,6.423076923,b
+Pistachio,Mating Disruption,PpoCombo,8,13.46153846,a
+Pistachio,Mating Disruption,Kairomone,8,1.919871795,cd
+Pistachio,Mating Disruption,KairomoneCombo,8,4.038461538,bc
