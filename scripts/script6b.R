@@ -73,9 +73,9 @@ p3 <- ggplot(y18alm) +
   theme(axis.text.x = element_text(color = "black", size = 10, angle = 45, hjust = 1),
         axis.text.y = element_text(color = "black", size = 10),
         axis.title.x = element_text(color = "black", size = 10),
-        axis.title.y = element_text(color = "black", size = 10),
-        legend.title = element_text(color = "black", size = 9),
-        legend.text = element_text(color = "black", size = 9))
+        axis.title.y = element_text(color = "black", size = 12),
+        legend.title = element_text(color = "black", size = 12),
+        legend.text = element_text(color = "black", size = 12))
 
 p3
 
@@ -101,20 +101,30 @@ y18_june_trts <- c("WingPhero","WingPheroPpo","DeltPheroPpo","BuckPpo","BuckPher
 y18_june$Treatment <- fct_relevel(y18_june$Treatment,y18_june_trts)
 
 
-y18_june <- y18_june %>% filter(Count > 0 & Treatment != "WingPhero")
+y18_june <- y18_june %>% filter(Count > 0 & Treatment != "WingPhero") #no NAs
+
+trtmns <- y18_june %>% 
+  group_by(Treatment) %>% 
+  summarise(nObs = n(),
+            avg = mean(pMale))
+  
+mnsep_vec <- c("a","ab","ab","b")
+trtmns <-  add_column(trtmns,mnsep = mnsep_vec)
+
 
 p5 <- ggplot(y18_june, aes(x = Treatment, y = pMale))+
   geom_boxplot() +
-  ylim(0,1) +
+  geom_text(data = trtmns, mapping = aes(label=mnsep, x = Treatment, y = avg, hjust=0, vjust=-2),  inherit.aes = FALSE) +
+    ylim(0,1) +
   theme_bw() + 
   xlab("") +
-  ylab("Males as proportion\nof adults captured") +
-  theme(axis.text.x = element_blank(),
-        axis.text.y = element_text(color = "black", size = 8),
-        axis.title.x = element_text(color = "black", size = 9),
-        axis.title.y = element_text(color = "black", size = 9),
-        legend.title = element_text(color = "black", size = 9),
-        legend.text = element_text(color = "black", size = 9))
+  ylab("Prop. males") +
+  theme(axis.text.x = element_text(color = "black", size = 10, angle = 45, hjust = 1),
+        axis.text.y = element_text(color = "black", size = 10),
+        axis.title.x = element_text(color = "black", size = 12),
+        axis.title.y = element_text(color = "black", size = 12),
+        legend.title = element_text(color = "black", size = 12),
+        legend.text = element_text(color = "black", size = 12))
 
 p5
 
