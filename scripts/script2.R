@@ -105,8 +105,8 @@ one.way
 ### Get factor names needed for plot labels
 levels(counts$Crop)[levels(counts$Crop) == "Alm"] <- "Almond"
 levels(counts$Crop)[levels(counts$Crop) == "Pis"] <- "Pistachio"
-levels(counts$MD)[levels(counts$MD) == "No"] <- "No Mating Disruption"
-levels(counts$MD)[levels(counts$MD) == "Yes"] <- "Mating Disruption"
+levels(counts$MD)[levels(counts$MD) == "No"] <- "Near Mating Disruption"
+levels(counts$MD)[levels(counts$MD) == "Yes"] <- "Under Mating Disruption"
 
 levels(counts$Treatment)[levels(counts$Treatment) == "NowBiolure"] <- "Pheromone"
 levels(counts$Treatment)[levels(counts$Treatment) == "StopNow"] <- "Kairomone"
