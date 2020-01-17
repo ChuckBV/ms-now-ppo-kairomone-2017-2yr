@@ -3,6 +3,14 @@
 Repository: https://github.com/chuckbv/ms-now-ppo-kairomone-2017-2yr
 
 ## Overview
+
+###Supports the paper:
+Burks CS, Higbee BS, and Beck JR. 2020. Traps and Attractants for Monitoring
+Navel Orangeworm (Lepidoptera: Pyralidae) in the Presence of Mating 
+Disruption. J. Econ. Entomol. (Accepted for publication)
+
+see "./doc/toz363.pdf"
+
 Experiments between 2017 and 2019 compared PPO and kairomone blend, examined 
 effect of trap type on PPO effectiveness, and examined sex ratio. Experiments
 included:
