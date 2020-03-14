@@ -7,7 +7,7 @@ Repository: https://github.com/chuckbv/ms-now-ppo-kairomone-2017-2yr
 ###Supports the paper:
 Burks CS, Higbee BS, and Beck JR. 2020. Traps and Attractants for Monitoring
 Navel Orangeworm (Lepidoptera: Pyralidae) in the Presence of Mating 
-Disruption. J. Econ. Entomol. (Accepted for publication)
+Disruption. J. Econ. Entomol. https://doi.org/10.1093/jee/toz363
 
 see "./doc/toz363.pdf"
 
